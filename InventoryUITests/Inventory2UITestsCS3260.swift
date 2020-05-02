@@ -82,7 +82,7 @@ class Inventory2UITestsCS3260: XCTestCase {
             
             let buttons = cells.element(boundBy: i).buttons
             let button = buttons.element(boundBy: 0)
-            XCTAssert(button.label ==  "More Info", "Table entry \(i) disclosure button not found")
+            XCTAssert(button.label ==  "chevron", "Table entry \(i) disclosure button not found")
 
         }
         deleteAllTableCells()
@@ -118,7 +118,7 @@ class Inventory2UITestsCS3260: XCTestCase {
         let buttons = tableView.buttons
         XCTAssert(buttons.element(boundBy: 1).exists, "Second cell to be deleted not found")
         
-        buttons.element(boundBy: 1).tap()
+        buttons.element(boundBy: 1).forceTapElement()
         XCTAssert(app.navigationBars["Edit Item"].exists, "Screen not titled \"Edit Item\"")
         XCTAssert(app.navigationBars["Edit Item"].buttons["Inventory"].exists, "Inventory back button not found")
         XCTAssert(app.navigationBars["Edit Item"].buttons["Save"].exists, "Save button not found")
@@ -128,12 +128,16 @@ class Inventory2UITestsCS3260: XCTestCase {
 
         let addedText = " more text added here"
         app.textFields["editShortDescription"].tap()
+        usleep(250000)
         app.textFields["editShortDescription"].tap()
+        usleep(250000)
         app.menuItems["Select All"].tap()
         app.menuItems["Cut"].tap()
         app.typeText(sampleItems[1].0 + addedText)
         app.textViews["editLongDescription"].tap()
+        usleep(250000)
         app.textViews["editLongDescription"].tap()
+        usleep(250000)
         app.menuItems["Select All"].tap()
         app.menuItems["Cut"].tap()
         app.typeText(sampleItems[1].1 + addedText)
@@ -202,7 +206,7 @@ class Inventory2UITestsCS3260: XCTestCase {
         
         deleteAllTableCells()
         
-        var sampleItems = [("Item one", "This is item one"),
+        let sampleItems = [("Item one", "This is item one"),
                            ("Item two", "This is item two"),
                            ("Item three", "This is item three"),
                            ]
@@ -233,7 +237,7 @@ class Inventory2UITestsCS3260: XCTestCase {
         
         deleteAllTableCells()
         
-        var sampleItems = [("Item one", "This is item one"),
+        let sampleItems = [("Item one", "This is item one"),
                            ("Item two", "This is item two"),
                            ("Item three", "This is item three"),
                            ]
@@ -270,7 +274,7 @@ class Inventory2UITestsCS3260: XCTestCase {
             
             let buttons = cells.element(boundBy: i).buttons
             let button = buttons.element(boundBy: 0)
-            XCTAssert(button.label ==  "More Info", "Table entry \(i) disclosure button not found")
+            XCTAssert(button.label ==  "chevron", "Table entry \(i) disclosure button not found")
             
         }
         deleteAllTableCells()
@@ -288,5 +292,17 @@ class Inventory2UITestsCS3260: XCTestCase {
             cell.buttons["Delete"].tap()
         }
 
+    }
+}
+
+extension XCUIElement {
+    func forceTapElement() {
+        if self.isHittable {
+            self.tap()
+        }
+        else {
+            let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector(dx:0.0, dy:0.0))
+            coordinate.tap()
+        }
     }
 }

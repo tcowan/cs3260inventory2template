@@ -50,24 +50,9 @@ class Inventory2UITestsCS3260: XCTestCase {
                            ("Item three", "This is item three"),
         ]
         let tableView = app.tables.element(boundBy: 0)
+        
+        addItems(items: sampleItems, application: app)
 
-        for i in 0..<sampleItems.count {
-            app.navigationBars["Inventory"].buttons["Add"].tap()
-            XCTAssert(app.navigationBars["Add New Item"].exists, "Screen not titled \"Add New Item\"")
-            XCTAssert(app.navigationBars["Add New Item"].buttons["Inventory"].exists, "Inventory back button not found in Add New Item")
-            XCTAssert(app.navigationBars["Add New Item"].buttons["Save"].exists, "Save button not found in Add New Item")
-            XCTAssert(app.textFields["addShortDescription"].exists, "No textField found with identifier addShortDescription in Add New Item")
-            XCTAssert(app.textViews["addLongDescription"].exists, "No textView found with identifier addLongDescription in Add New Item")
-            
-            XCTAssert(app.textFields["addShortDescription"].title == "", "addShortDescription is not empty on entry to Add New Item")
-            XCTAssert(app.textViews["addLongDescription"].title == "", "addLongDescription is not empty on entry to Add New Item")
-
-            app.textFields["addShortDescription"].tap()
-            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews.element.tap()
-            app.textViews.element.typeText(sampleItems[i].1)
-            app.navigationBars["Add New Item"].buttons["Save"].tap()
-        }
         let rowCount = tableView.cells.count
         XCTAssert(rowCount == sampleItems.count, "Table should have \(sampleItems.count) rows, but found \(rowCount)")
 
@@ -95,23 +80,11 @@ class Inventory2UITestsCS3260: XCTestCase {
                            ("Item two", "This is item two"),
                            ("Item three", "This is item three"),
                            ]
-        
-        let tableView = app.tables.element(boundBy: 0)
-        
-        for i in 0..<sampleItems.count {
-            XCTAssert(app.navigationBars["Inventory"].buttons["Add"].exists, "Add button not found on Inventory screen")
-            app.navigationBars["Inventory"].buttons["Add"].tap()
-            
-            XCTAssert(app.textFields["addShortDescription"].exists, "No textField found with identifier addShortDescription in Add New Item")
-            XCTAssert(app.textViews["addLongDescription"].exists, "No textView found with identifier addLongDescription in Add New Item")
-            XCTAssert(app.navigationBars["Add New Item"].buttons["Save"].exists, "Save button not found")
 
-            app.textFields["addShortDescription"].tap()
-            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews.element.tap()
-            app.textViews.element.typeText(sampleItems[i].1)
-            app.navigationBars["Add New Item"].buttons["Save"].tap()
-        }
+        let tableView = app.tables.element(boundBy: 0)
+
+        addItems(items: sampleItems, application: app)
+        
         let rowCount = tableView.cells.count
         XCTAssert(rowCount == sampleItems.count, "Table should have \(sampleItems.count) rows, but found \(rowCount)")
         
@@ -124,7 +97,6 @@ class Inventory2UITestsCS3260: XCTestCase {
         XCTAssert(app.navigationBars["Edit Item"].buttons["Save"].exists, "Save button not found")
         XCTAssert(app.textFields["editShortDescription"].exists, "No textField found with identifier addShortDescription in Edit Item")
         XCTAssert(app.textViews["editLongDescription"].exists, "No textView found with identifier addLongDescription in Edit Item")
-
 
         let addedText = " more text added here"
         app.textFields["editShortDescription"].tap()
@@ -167,17 +139,11 @@ class Inventory2UITestsCS3260: XCTestCase {
                            ]
         
         let tableView = app.tables.element(boundBy: 0)
+
+        addItems(items: sampleItems, application: app)
         
         let itemToDelete = 1
         
-        for i in 0..<sampleItems.count {
-            app.navigationBars["Inventory"].buttons["Add"].tap()
-            app.textFields["addShortDescription"].tap()
-            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews.element.tap()
-            app.textViews.element.typeText(sampleItems[i].1)
-            app.navigationBars["Add New Item"].buttons["Save"].tap()
-        }
         var rowCount = tableView.cells.count
         XCTAssert(rowCount == sampleItems.count, "Table should have \(sampleItems.count) rows, but found \(rowCount)")
         
@@ -206,27 +172,11 @@ class Inventory2UITestsCS3260: XCTestCase {
         
         deleteAllTableCells()
         
-        let sampleItems = [("Item one", "This is item one"),
-                           ("Item two", "This is item two"),
-                           ("Item three", "This is item three"),
+        let sampleItem = [("Item one", "This is item one"),
                            ]
         
         let tableView = app.tables.element(boundBy: 0)
-        
-        for i in 0..<sampleItems.count {
-            XCTAssert(app.navigationBars["Inventory"].buttons["Add"].exists, "Add button not found on Inventory screen")
-            app.navigationBars["Inventory"].buttons["Add"].tap()
-            
-            XCTAssert(app.textFields["addShortDescription"].exists, "No textField found with identifier addShortDescription in Add New Item")
-            XCTAssert(app.textViews["addLongDescription"].exists, "No textView found with identifier addLongDescription in Add New Item")
-            XCTAssert(app.navigationBars["Add New Item"].buttons["Save"].exists, "Save button not found")
-            
-            app.textFields["addShortDescription"].tap()
-            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews.element.tap()
-            app.textViews.element.typeText(sampleItems[i].1)
-            app.navigationBars["Add New Item"].buttons["Inventory"].tap()
-        }
+        addItems(items: sampleItem, application: app, save: false)
 
         let rowCount = tableView.cells.count
         XCTAssert(rowCount == 0, "Table should have no rows in it, but found \(rowCount)")
@@ -244,20 +194,7 @@ class Inventory2UITestsCS3260: XCTestCase {
         
         let tableView = app.tables.element(boundBy: 0)
         
-        for i in 0..<sampleItems.count {
-            XCTAssert(app.navigationBars["Inventory"].buttons["Add"].exists, "Add button not found on Inventory screen")
-            app.navigationBars["Inventory"].buttons["Add"].tap()
-            
-            XCTAssert(app.textFields["addShortDescription"].exists, "No textField found with identifier addShortDescription in Add New Item")
-            XCTAssert(app.textViews["addLongDescription"].exists, "No textView found with identifier addLongDescription in Add New Item")
-            XCTAssert(app.navigationBars["Add New Item"].buttons["Save"].exists, "Save button not found")
-            
-            app.textFields["addShortDescription"].tap()
-            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews.element.tap()
-            app.textViews.element.typeText(sampleItems[i].1)
-            app.navigationBars["Add New Item"].buttons["Save"].tap()
-        }
+        addItems(items: sampleItems, application: app)
         
         XCUIDevice.shared.press(.home)
         app.terminate()
@@ -295,6 +232,57 @@ class Inventory2UITestsCS3260: XCTestCase {
     }
 }
 
+func addItems(items:[(String,String)], application:XCUIApplication, save:Bool = true) {
+    let app = application
+    let tableView = app.tables.element(boundBy: 0)
+
+    for i in 0..<items.count {
+        sleep(2)
+        _ = app.navigationBars["Inventory"].buttons["Add"].waitForExistence(timeout: 2)
+        app.navigationBars["Inventory"].buttons["Add"].tap()
+
+        XCTAssert(app.navigationBars["Add New Item"].exists, "Screen not titled \"Add New Item\"")
+        XCTAssert(app.navigationBars["Add New Item"].buttons["Inventory"].exists, "Inventory back button not found in Add New Item")
+        XCTAssert(app.navigationBars["Add New Item"].buttons["Save"].exists, "Save button not found in Add New Item")
+        XCTAssert(app.textFields["addShortDescription"].exists, "No textField found with identifier addShortDescription in Add New Item")
+        XCTAssert(app.textViews["addLongDescription"].exists, "No textView found with identifier addLongDescription in Add New Item")
+        
+        XCTAssert(app.textFields["addShortDescription"].title == "", "addShortDescription is not empty on entry to Add New Item")
+        XCTAssert(app.textViews["addLongDescription"].title == "", "addLongDescription is not empty on entry to Add New Item")
+
+        app.textFields["addShortDescription"].tap()
+        sleep(3)
+        app.textFields["addShortDescription"].typeText(items[i].0)
+        app.textViews["addLongDescription"].setText(text: items[i].1, application: app)
+
+        if save == true {
+            _ = app.navigationBars["Add New Item"].buttons["Save"].waitForExistence(timeout: 2)
+            app.navigationBars["Add New Item"].buttons["Save"].tap()
+            sleep(2)
+        }
+
+    }
+    if save == true {
+        let rowCount = tableView.cells.count
+        XCTAssert(rowCount == items.count, "Table should have \(items.count) rows, but found \(rowCount)")
+        let cells = tableView.children(matching: .cell)
+        for i in 0..<items.count {
+            let texts = cells.element(boundBy: i).staticTexts
+            let titleFound = texts.element(boundBy: 0).label
+            let subTitleFound = texts.element(boundBy: 1).label
+            print("\(i): \(titleFound) \(subTitleFound)")
+            XCTAssert(titleFound == items[i].0, "Table cell \(i) title contains \"\(titleFound)\" but should contain \"\(items[i].0)\"")
+            XCTAssert(subTitleFound == items[i].1, "Table cell \(i) subTitle contains \"\(subTitleFound)\" but should contain \"\(items[i].1)\"")
+            let buttons = cells.element(boundBy: i).buttons
+            let button = buttons.element(boundBy: 0)
+            XCTAssert(button.label ==  "chevron", "Table entry \(i) disclosure button not found")
+            
+        }
+    }
+}
+
+
+
 extension XCUIElement {
     func forceTapElement() {
         if self.isHittable {
@@ -306,3 +294,19 @@ extension XCUIElement {
         }
     }
 }
+
+extension XCUIElement {
+    // The following is a workaround for inputting text in the
+    //simulator when the keyboard is hidden
+    func setText(text: String, application: XCUIApplication) {
+        UIPasteboard.general.string = text
+        tap()
+        sleep(3)
+        doubleTap()
+        sleep(4)
+        application.menuItems["Paste"].tap()
+        sleep(4)
+    }
+}
+
+

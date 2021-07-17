@@ -39,6 +39,6 @@ class InventoryUITests: XCTestCase {
             }
         }
     }
+*/
 }
 
-*/

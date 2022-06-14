@@ -1,5 +1,5 @@
 //
-//  InventoryUITestsCS3260.swift
+//  InventoryUITests2CS3260.swift
 //  InventoryUITests
 //
 //  Created by Ted Cowan on 10/13/18.
@@ -9,7 +9,7 @@
 import XCTest
 import SwiftUI
 
-class InventoryUITestsCS3260: XCTestCase {
+class InventoryUITests2CS3260: XCTestCase {
     
     var app: XCUIApplication!
     

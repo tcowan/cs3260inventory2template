@@ -9,7 +9,7 @@
 import XCTest
 import SwiftUI
 
-class InventoryUITests2CS3260: XCTestCase {
+class Inventory2UITestsCS3260: XCTestCase {
     
     var app: XCUIApplication!
     

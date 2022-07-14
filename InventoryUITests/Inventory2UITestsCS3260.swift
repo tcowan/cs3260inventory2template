@@ -103,7 +103,7 @@ class Inventory2UITestsCS3260: XCTestCase {
         if selectAll {
             app.menuItems["Select All"].tap()
             app.menuItems["Cut"].tap()
-            app.typeText(testItems[1].0 + addedText)
+            app.typeTextSlowly(testItems[1].0 + addedText)
             app.textFields["editLongDescription"].tap()
             usleep(250000)  // now required with iOS 13
             app.textFields["editLongDescription"].tap()

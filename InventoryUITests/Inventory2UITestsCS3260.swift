@@ -224,9 +224,17 @@ class Inventory2UITestsCS3260: XCTestCase {
             
             XCTAssert(app.textFields["addShortDescription"].title == "", "addShortDescription is not empty on entry to Add New Item")
             XCTAssert(app.textFields["addLongDescription"].title == "", "addLongDescription is not empty on entry to Add New Item")
-
+            //app.textFields["addShortDescription"].tap()
+            //app.textFields["addShortDescription"].typeText(items[i].0)
+            UIPasteboard.general.string = items[i].0
             app.textFields["addShortDescription"].tap()
-            app.textFields["addShortDescription"].typeText(items[i].0)
+            sleep(1)
+            app.textFields["addShortDescription"].doubleTap()
+            sleep(1)
+            _ = app.menuItems.element(boundBy: 0).waitForExistence(timeout: 3)
+            app.menuItems.element(boundBy: 0).tap()
+
+
             UIPasteboard.general.string = items[i].1
             app.textFields["addLongDescription"].tap()
             sleep(2)
